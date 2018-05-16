@@ -1,16 +1,9 @@
 package com.example.mmuazekici.imdb250;
 
-
-import android.app.LoaderManager;
-import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,18 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.SignupLogin.LogInActivity;
 
-import java.io.IOException;
-
-public class MovieListActivity extends AppCompatActivity implements MoviesAdapter.ItemAdapterOnClickHandler{
+public class FavoritesActivity extends AppCompatActivity implements MoviesAdapter.ItemAdapterOnClickHandler{
 
     DatabaseHelper myDbHelper;
 
@@ -38,7 +25,8 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_list);
+        setContentView(R.layout.activity_favorites);
+
 
         myDbHelper = new DatabaseHelper(this);
 
@@ -49,50 +37,57 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         }
 
         RecyclerView rvMovies = findViewById(R.id.rv_movies);
-        TextView usernameTextField = findViewById(R.id.tv_welcome);
 
         LinearLayoutManager layoutManager = new GridLayoutManager(this,1);
         rvMovies.setLayoutManager(layoutManager);
         rvMovies.setHasFixedSize(true);
 
-        mAdapter = new MoviesAdapter(this, MovieListActivity.this);
+        mAdapter = new MoviesAdapter(this, FavoritesActivity.this);
         rvMovies.setAdapter(mAdapter);
 
+
         SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
-        String username = prefs.getString("username", null);
-        if (username != null){
-            usernameTextField.setText("Welcome " + username);
-        }else{
-            usernameTextField.setText("Welcome");
+        String userID = prefs.getString("userID", null);
+
+        getFavoritesTable(userID);
+
         }
 
 
+    public void getFavoritesTable(String userID){
 
-        Cursor mCursor = myDbHelper.query(DatabaseConract.MoviesTable.TABLE_NAME, null, null, null, DatabaseConract.MoviesTable.COLUMN_IMDB_SCORE+ " DESC");
+        String sql = "SELECT Movies.movieName, Movies.date, Movies.imdbScore, Movies.duration, Movies.movieID " +
+                     "FROM Movies " +
+                     "INNER JOIN User_Favorites ON Movies.movieID = User_Favorites.movieID " +
+                     "WHERE userID=? " +
+                     "ORDER BY Movies.imdbScore DESC;";
 
-        mAdapter.swapCursor(mCursor);
+        Cursor favoritesCursor = myDbHelper.rawQuery(sql, new String[] {userID});
+
+        mAdapter.swapCursor(favoritesCursor);
     }
+
+
+
 
 
     @Override
     public void onClick(Cursor c, int clickedItemIndex) {
         if(c.moveToPosition(clickedItemIndex)){
-            Intent startChildActivityIntent = new Intent(MovieListActivity.this, MovieDetailsActivity.class);
+            Intent startChildActivityIntent = new Intent(FavoritesActivity.this, MovieDetailsActivity.class);
             startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_MOVIE_ID)) + "");
             startActivity(startChildActivityIntent);
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_movie_list, menu);
+        getMenuInflater().inflate(R.menu.menu_favorites_list, menu);
 
 
         return super.onCreateOptionsMenu(menu);
     }
-
 
 
     @Override
@@ -100,16 +95,7 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
 
         int id = item.getItemId();
 
-        if (id == R.id.favorites){
-
-            //TODO: GO to favorites page
-
-
-            Intent startChildActivityIntent = new Intent(this, FavoritesActivity.class);
-            startActivity(startChildActivityIntent);
-
-
-        } else if (id == R.id.userProfile) {
+        if (id == R.id.userProfile) {
 
             //TODO: Go to user profile
 
@@ -122,41 +108,13 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
             Intent startChildActivityIntent = new Intent(this, LogInActivity.class);
             startActivity(startChildActivityIntent);
 
+        } else if (id == R.id.home){
+
+            Intent startChildActivityIntent = new Intent(this, MovieListActivity.class);
+            startActivity(startChildActivityIntent);
+
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-
-    @Override
-    public void onBackPressed() {
-    }
-
-
-
-    //    @Override
-//    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-//        Uri userURI = DatabaseConract.MoviesTable.CONTENT_URI;
-//
-//        return new CursorLoader(this,
-//                userURI,
-//                null,
-//                null,
-//                null,
-//                null);
-//
-//    }
-//
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-//        mAdapter.swapCursor(data);
-//    }
-//
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> loader) {
-//        mAdapter.swapCursor(null);
-//    }
 }

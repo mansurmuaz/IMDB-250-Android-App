@@ -30,7 +30,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, 11);
         this.myContext = context;
         this.DB_PATH = "/data/data/" + context.getPackageName() + "/" + "databases/";
-        Log.e("Path 1", DB_PATH);
     }
 
 
@@ -120,6 +119,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void delete(String tableName, String selection, String[] selectionArgs){
         myDataBase.delete(tableName, selection, selectionArgs);
+    }
+
+    public Cursor rawQuery(String sql, String[] selectionArgs){
+        return myDataBase.rawQuery( sql, selectionArgs);
     }
 
 }

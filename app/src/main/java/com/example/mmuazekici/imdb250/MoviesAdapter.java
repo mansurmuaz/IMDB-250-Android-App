@@ -14,15 +14,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.moviesView
 
 
     private Cursor mCursor;
-
+    private final ItemAdapterOnClickHandler mClickHandler;
     private Context mContext;
 
-    public MoviesAdapter(Context context) {
-        super();
-        mContext = context;
+    public interface ItemAdapterOnClickHandler {
+        void onClick(Cursor c, int clickedPosition);
     }
 
-    public class moviesViewHolder extends RecyclerView.ViewHolder{
+    public MoviesAdapter(Context context, ItemAdapterOnClickHandler clickHandler) {
+        super();
+        mContext = context;
+        mClickHandler = clickHandler;
+    }
+
+    public class moviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private final TextView movieNameTextView;
         private final TextView durationTextView;
@@ -40,7 +45,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.moviesView
             durationTextView = itemView.findViewById(R.id.rv_duration);
             yearTextView = itemView.findViewById(R.id.rv_year);
             imdbScoreTextView = itemView.findViewById(R.id.rv_imdbScore);
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            mClickHandler.onClick(mCursor, adapterPosition);
         }
 
         public void setMovieNameText(String s){

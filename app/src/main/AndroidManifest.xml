@@ -9,16 +9,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MovieListActivity" />
+        <activity
+            android:name=".MovieListActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".SignupLogin.SignUpActivity" />
-        <activity android:name=".SignupLogin.LogInActivity">
+        <activity
+            android:name=".SignupLogin.LogInActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieDetailsActivity"></activity>
+        <activity android:name=".MovieDetailsActivity" />
+        <activity android:name=".FavoritesActivity"></activity>
     </application>
 
 </manifest>

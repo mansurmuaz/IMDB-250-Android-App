@@ -14,12 +14,15 @@
             android:id="@+id/rv_movieName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Movie Name"
             android:textAlignment="viewStart"
             android:textColor="#393939"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/rv_year"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
