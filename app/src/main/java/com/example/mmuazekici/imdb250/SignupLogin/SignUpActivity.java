@@ -15,6 +15,9 @@ import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.R;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class SignUpActivity extends AppCompatActivity {
 
 
@@ -94,18 +97,21 @@ public class SignUpActivity extends AppCompatActivity {
 
     public boolean isInputsValid(){
 
-        //TODO: Check special charackters...
-
         username = usernameTextField.getText().toString();
         password = passwordTextField.getText().toString();
         confirmPassword = confirmPasswordTextField.getText().toString();
 
         if (!username.equals("")) {
             if (!password.equals("") && password.length() >= 6){
-                if (password.equals(confirmPassword)) {
-                    return true;
+                if (!isContainSpecialChar(password)) {
+                    if (password.equals(confirmPassword)) {
+                        return true;
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Passwords should be same!", Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
                 }else{
-                    Toast.makeText(SignUpActivity.this, "Passwords should be same!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Password cannot contain special characters!", Toast.LENGTH_SHORT).show();
                     return false;
                 }
             }else{
@@ -116,5 +122,13 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this, "Please Enter Username!", Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+
+    public boolean isContainSpecialChar(String s){
+        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(s);
+        boolean b = m.find();
+        return b;
     }
 }

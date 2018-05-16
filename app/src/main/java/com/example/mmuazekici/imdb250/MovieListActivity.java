@@ -102,16 +102,14 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
 
         if (id == R.id.favorites){
 
-            //TODO: GO to favorites page
-
-
             Intent startChildActivityIntent = new Intent(this, FavoritesActivity.class);
             startActivity(startChildActivityIntent);
 
-
         } else if (id == R.id.userProfile) {
 
-            //TODO: Go to user profile
+            Intent startChildActivityIntent = new Intent(this, ProfileActivity.class);
+            startActivity(startChildActivityIntent);
+
 
         } else if (id == R.id.logout) {
 
@@ -136,27 +134,4 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
     }
 
 
-
-    //    @Override
-//    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-//        Uri userURI = DatabaseConract.MoviesTable.CONTENT_URI;
-//
-//        return new CursorLoader(this,
-//                userURI,
-//                null,
-//                null,
-//                null,
-//                null);
-//
-//    }
-//
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-//        mAdapter.swapCursor(data);
-//    }
-//
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> loader) {
-//        mAdapter.swapCursor(null);
-//    }
 }

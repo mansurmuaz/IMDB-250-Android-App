@@ -22,6 +22,9 @@ public class FavoritesActivity extends AppCompatActivity implements MoviesAdapte
 
     MoviesAdapter mAdapter;
 
+    String userID;
+    boolean isHaveUserID = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,8 @@ public class FavoritesActivity extends AppCompatActivity implements MoviesAdapte
 
 
         SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
-        String userID = prefs.getString("userID", null);
+        userID = prefs.getString("userID", null);
+        isHaveUserID = true;
 
         getFavoritesTable(userID);
 
@@ -66,10 +70,14 @@ public class FavoritesActivity extends AppCompatActivity implements MoviesAdapte
 
         mAdapter.swapCursor(favoritesCursor);
     }
-
-
-
-
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isHaveUserID){
+            getFavoritesTable(userID);
+        }
+    }
 
     @Override
     public void onClick(Cursor c, int clickedItemIndex) {
