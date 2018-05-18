@@ -205,7 +205,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     public void getStarsTable(){
 
-        String sql = "SELECT People.name, People.surname " +
+        String sql = "SELECT People.name, People.surname, Casts.role " +
                 "FROM People " +
                 "INNER JOIN Casts ON People.personID = Casts.personID "+
                 "WHERE movieID=? ;";
@@ -219,8 +219,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
             String director = "";
 
             for (int i = 0; i<castsCursor.getCount(); i++){
+
+                String role = castsCursor.getString(castsCursor.getColumnIndex("role"));
+
+                if (role.equals("Null")){
+                    role = "";
+                }
+
                 director = director + castsCursor.getString(castsCursor.getColumnIndex("name")) + " " +
-                        castsCursor.getString(castsCursor.getColumnIndex("surname")) + "\n";
+                        castsCursor.getString(castsCursor.getColumnIndex("surname")) + " \t|\t " + role + "\n";
                 castsCursor.moveToNext();
             }
             tv_Stars.setText(removeLastChar(director));

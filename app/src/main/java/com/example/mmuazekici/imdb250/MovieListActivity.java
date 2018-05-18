@@ -105,6 +105,11 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
             Intent startChildActivityIntent = new Intent(this, FavoritesActivity.class);
             startActivity(startChildActivityIntent);
 
+        } else if (id == R.id.search) {
+
+            Intent startChildActivityIntent = new Intent(this, SearchActivity.class);
+            startActivity(startChildActivityIntent);
+
         } else if (id == R.id.userProfile) {
 
             Intent startChildActivityIntent = new Intent(this, ProfileActivity.class);
