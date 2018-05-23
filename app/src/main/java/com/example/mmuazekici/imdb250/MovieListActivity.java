@@ -1,16 +1,10 @@
 package com.example.mmuazekici.imdb250;
 
 
-import android.app.LoaderManager;
-import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,16 +12,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.SignupLogin.LogInActivity;
-
-import java.io.IOException;
+import com.example.mmuazekici.imdb250.UsersFriends.FriendsActivity;
+import com.example.mmuazekici.imdb250.UsersFriends.UsersActivity;
 
 public class MovieListActivity extends AppCompatActivity implements MoviesAdapter.ItemAdapterOnClickHandler{
 
@@ -125,7 +116,14 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
             Intent startChildActivityIntent = new Intent(this, LogInActivity.class);
             startActivity(startChildActivityIntent);
 
+        } else if (id == R.id.users){
+            Intent startChildActivityIntent = new Intent(this, UsersActivity.class);
+            startActivity(startChildActivityIntent);
+        } else if (id == R.id.friends){
+            Intent startChildActivityIntent = new Intent(this, FriendsActivity.class);
+            startActivity(startChildActivityIntent);
         }
+
         return super.onOptionsItemSelected(item);
     }
 

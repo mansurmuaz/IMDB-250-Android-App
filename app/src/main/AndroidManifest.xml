@@ -12,20 +12,31 @@
         <activity
             android:name=".MovieListActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".SignupLogin.SignUpActivity" />
+        <activity android:name=".SignupLogin.SignUpActivity"
+            android:label="Sign Up"/>
         <activity
             android:name=".SignupLogin.LogInActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:label="Log In">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieDetailsActivity" />
-        <activity android:name=".FavoritesActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".MovieDetailsActivity"
+                  android:label="Movie Details"/>
+        <activity android:name=".FavoritesActivity"
+                  android:label="Your Favorites"/>
+        <activity android:name=".ProfileActivity"
+                  android:label="Profile"/>
+        <activity android:name=".SearchActivity"
+            android:label="Search"/>
+        <activity android:name=".UsersFriends.UsersActivity"
+                  android:label="Users"/>
+        <activity android:name=".UsersFriends.FriendsActivity"
+                  android:label="Your Friends"/>
+        <activity android:name=".UsersFriends.FriendFavoritesActivity"></activity>
     </application>
 
 </manifest>

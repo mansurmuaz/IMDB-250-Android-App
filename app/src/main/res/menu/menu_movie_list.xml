@@ -14,18 +14,28 @@
         android:icon="@android:drawable/btn_star_big_on"
         android:title="@string/favorites"
         app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/friends"
+        android:icon="@drawable/friends"
+        android:title="@string/friends"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/users"
+        android:icon="@drawable/users"
+        android:title="@string/users"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/userProfile"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/profile"
-        app:showAsAction="collapseActionView" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/logout"
         android:icon="@android:drawable/ic_lock_power_off"
         android:title="@string/logout"
         app:showAsAction="collapseActionView" />
-
-
 
 </menu>

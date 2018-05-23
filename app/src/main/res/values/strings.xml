@@ -5,7 +5,8 @@
     <string name="favorites">Favorites</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
-
+    <string name="users">Users</string>
+    <string name="friends">Friends</string>
 
 
     <string-array name="search_by">
@@ -62,7 +63,6 @@
         <item>8.6</item>
         <item>8.5</item>
     </string-array>
-
 
 
 </resources>
