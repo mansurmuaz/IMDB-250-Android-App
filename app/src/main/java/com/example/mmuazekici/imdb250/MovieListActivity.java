@@ -1,18 +1,24 @@
 package com.example.mmuazekici.imdb250;
 
 
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
@@ -25,6 +31,10 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
     DatabaseHelper myDbHelper;
 
     MoviesAdapter mAdapter;
+    String username;
+    String userID;
+
+    Cursor requestCursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +42,7 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         setContentView(R.layout.activity_movie_list);
 
         myDbHelper = new DatabaseHelper(this);
+
 
         try {
             myDbHelper.openDataBase();
@@ -50,20 +61,78 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         rvMovies.setAdapter(mAdapter);
 
         SharedPreferences prefs = getSharedPreferences("pref", MODE_PRIVATE);
-        String username = prefs.getString("username", null);
+        username = prefs.getString("username", null);
+        userID = prefs.getString("userID", null);
         if (username != null){
             usernameTextField.setText("Welcome " + username);
         }else{
             usernameTextField.setText("Welcome");
         }
 
-
-
         Cursor mCursor = myDbHelper.query(DatabaseConract.MoviesTable.TABLE_NAME, null, null, null, DatabaseConract.MoviesTable.COLUMN_IMDB_SCORE+ " DESC");
-
         mAdapter.swapCursor(mCursor);
+
+
+        //TODO: Check the friendship request
+        int requestCount = checkRequests();
+        requestCursor.moveToFirst();
+        for (int index = 0; index<requestCount; index++){
+            String requestID = requestCursor.getString(requestCursor.getColumnIndex("userID"));
+            String requestName = requestCursor.getString(requestCursor.getColumnIndex("username"));
+            sendRequestResponseAlert(requestID, requestName);
+            requestCursor.moveToNext();
+        }
     }
 
+
+    public int checkRequests() {
+
+        String sql = "SELECT Users.userID, Users.username " +
+                     "FROM Users " +
+                     "INNER JOIN User_Friends ON Users.userID = User_Friends.userID " +
+                     "WHERE User_Friends.friendID=? AND stateID=1 " +
+                     "ORDER BY Users.username DESC;";
+
+        requestCursor = myDbHelper.rawQuery(sql, new String[]{userID});
+
+        return requestCursor.getCount();
+    }
+
+
+    public void sendRequestResponseAlert(final String requestID, final String requestUsername){
+
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this , android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle("Friendship Request")
+                .setMessage(requestUsername +" sent you friendship request. Do you want to be friend with him/her?")
+                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        updateFriendshipDb(requestID, 3);
+                        Toast.makeText(MovieListActivity.this, "You are friend with " + requestUsername + " now!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Reject", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        updateFriendshipDb(requestID, 2);
+                        Toast.makeText(MovieListActivity.this, "You rejected friendship request of " + requestUsername + "!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setIcon(R.drawable.users)
+                .setCancelable(false)
+                .show();
+    }
+
+    public void updateFriendshipDb(String requestID, int stateID){
+
+        ContentValues friendValues = new ContentValues();
+        friendValues.put("stateID", stateID);
+
+        myDbHelper.update(friendValues, "User_Friends", "userID=? and friendID=?", new String[] {requestID, userID});
+    }
 
     @Override
     public void onClick(Cursor c, int clickedItemIndex) {
@@ -127,13 +196,27 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
-
-
     @Override
     public void onBackPressed() {
+
+        Cursor xCursor = myDbHelper.query("User_Friends", null, null, null, null);
+        xCursor.moveToFirst();
+
+        Log.i("xxx", "-----------------------------------------------");
+        Log.i("xxx", "---------------User_Friends--------------------");
+        Log.i("xxx", "-----------------------------------------------");
+        Log.i("xxx", "-----userID-----friendID--------stateID--------");
+
+        for (int index = 0; index<xCursor.getCount(); index++){
+            String uID = xCursor.getString(xCursor.getColumnIndex("userID"));
+            String fID = xCursor.getString(xCursor.getColumnIndex("friendID"));
+            String sID = xCursor.getString(xCursor.getColumnIndex("stateID"));
+
+            Log.i("xxx", "--------  "+  uID  + "  -----  " + fID + "  -------  " + sID + "  -------");
+            xCursor.moveToNext();
+        }
+
+
     }
 
 

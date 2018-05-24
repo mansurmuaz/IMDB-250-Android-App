@@ -24,7 +24,7 @@
         android:id="@+id/users"
         android:icon="@drawable/users"
         android:title="@string/users"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/userProfile"

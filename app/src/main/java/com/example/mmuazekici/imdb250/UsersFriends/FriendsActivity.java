@@ -14,8 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.FavoritesActivity;
+import com.example.mmuazekici.imdb250.MovieDetailsActivity;
 import com.example.mmuazekici.imdb250.MovieListActivity;
 import com.example.mmuazekici.imdb250.ProfileActivity;
 import com.example.mmuazekici.imdb250.R;
@@ -57,12 +59,10 @@ public class FriendsActivity extends AppCompatActivity implements UsersAdapter.I
         userID = prefs.getString("userID", null);
 
 
-        //TODO: Get usernames which are my friends
-
         String sql = "SELECT Users.userID, Users.username " +
                      "FROM Users " +
                      "INNER JOIN User_Friends ON Users.userID = User_Friends.friendID " +
-                     "WHERE User_Friends.userID=? AND stateID=2 " +
+                     "WHERE User_Friends.userID=? AND stateID=3 " +
                      "ORDER BY Users.username DESC;";
 
         Cursor mCursor = myDbHelper.rawQuery(sql, new String[] {userID});
@@ -79,7 +79,12 @@ public class FriendsActivity extends AppCompatActivity implements UsersAdapter.I
     @Override
     public void onClick(Cursor c, int clickedItemIndex) {
         if(c.moveToPosition(clickedItemIndex)){
+            //TODO: send to friends favorites
 
+            Intent startChildActivityIntent = new Intent(FriendsActivity.this, FriendFavoritesActivity.class);
+            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex("userID")));
+            startChildActivityIntent.putExtra("username", c.getString(c.getColumnIndex("username")));
+            startActivity(startChildActivityIntent);
         }
     }
 
