@@ -194,6 +194,7 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.Ite
 
                         Intent startChildActivityIntent = new Intent(UsersActivity.this, FriendFavoritesActivity.class);
                         startChildActivityIntent.putExtra(Intent.EXTRA_UID, clickedUserID);
+                        startChildActivityIntent.putExtra("username", username);
                         startActivity(startChildActivityIntent);
                     }
                 })

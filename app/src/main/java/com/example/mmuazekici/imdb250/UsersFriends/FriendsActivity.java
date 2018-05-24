@@ -79,7 +79,6 @@ public class FriendsActivity extends AppCompatActivity implements UsersAdapter.I
     @Override
     public void onClick(Cursor c, int clickedItemIndex) {
         if(c.moveToPosition(clickedItemIndex)){
-            //TODO: send to friends favorites
 
             Intent startChildActivityIntent = new Intent(FriendsActivity.this, FriendFavoritesActivity.class);
             startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex("userID")));
