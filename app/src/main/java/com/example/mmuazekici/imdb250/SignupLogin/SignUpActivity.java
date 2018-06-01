@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.R;
 
@@ -76,13 +75,13 @@ public class SignUpActivity extends AppCompatActivity {
     public void signInButtonTapped(){
 
         if(isInputsValid()) {
-            if (myDbHelper.query(DatabaseConract.UsersTable.TABLE_NAME, null, "username=?", new String[]{username}, null).getCount() == 0){
+            if (myDbHelper.query("Users", null, "username=?", new String[]{username}, null).getCount() == 0){
 
                 ContentValues userValues = new ContentValues();
-                userValues.put(DatabaseConract.UsersTable.COLUMN_USER_NAME, username);
-                userValues.put(DatabaseConract.UsersTable.COLUMN_PASSWORD, password);
+                userValues.put("username", username);
+                userValues.put("password", password);
 
-                myDbHelper.insert(DatabaseConract.UsersTable.TABLE_NAME, userValues);
+                myDbHelper.insert("Users", userValues);
 
                 Toast.makeText(SignUpActivity.this, "Signed Up Succesfully. Please Log In!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(SignUpActivity.this, LogInActivity.class));

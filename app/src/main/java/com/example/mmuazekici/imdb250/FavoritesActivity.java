@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.SignupLogin.LogInActivity;
 
@@ -83,7 +82,7 @@ public class FavoritesActivity extends AppCompatActivity implements MoviesAdapte
     public void onClick(Cursor c, int clickedItemIndex) {
         if(c.moveToPosition(clickedItemIndex)){
             Intent startChildActivityIntent = new Intent(FavoritesActivity.this, MovieDetailsActivity.class);
-            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_MOVIE_ID)) + "");
+            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex("movieID")));
             startActivity(startChildActivityIntent);
         }
     }

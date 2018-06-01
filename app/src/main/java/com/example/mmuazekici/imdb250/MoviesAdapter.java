@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
-
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.moviesViewHolder> {
 
 
@@ -83,16 +81,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.moviesView
 
         mCursor.moveToPosition(position);
 
-        String currentMovieName =  mCursor.getString(mCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_MOVIE_NAME));
+        String currentMovieName =  mCursor.getString(mCursor.getColumnIndex("movieName"));
         holder.setMovieNameText(currentMovieName);
 
-        String currentDuration =  mCursor.getString(mCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_DURATION));
+        String currentDuration =  mCursor.getString(mCursor.getColumnIndex("duration"));
         holder.setdurationText(currentDuration);
 
-        String currentYear =  mCursor.getString(mCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_DATE));
+        String currentYear =  mCursor.getString(mCursor.getColumnIndex("date"));
         holder.setYearText(currentYear);
 
-        String currentImdbScore =  mCursor.getString(mCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_IMDB_SCORE));
+        String currentImdbScore =  mCursor.getString(mCursor.getColumnIndex("imdbScore"));
         holder.setImdbScoreText(currentImdbScore);
     }
 

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.MovieListActivity;
 import com.example.mmuazekici.imdb250.R;
@@ -105,8 +104,8 @@ public class LogInActivity extends AppCompatActivity {
             if (!password.equals("")) {
 
 
-                Cursor mCursor = myDbHelper.query(DatabaseConract.UsersTable.TABLE_NAME,
-                        new String[]{DatabaseConract.UsersTable.COLUMN_USER_ID, DatabaseConract.UsersTable.COLUMN_USER_NAME,DatabaseConract.UsersTable.COLUMN_PASSWORD},
+                Cursor mCursor = myDbHelper.query("Users",
+                        new String[]{"userID", "username", "password"},
                         "username=? and password=?",
                         new String[]{username, password},
                         null);
@@ -115,8 +114,8 @@ public class LogInActivity extends AppCompatActivity {
                 if (mCursor.getCount() != 0){
 
                     mCursor.moveToFirst();
-                    String userName = mCursor.getString(mCursor.getColumnIndex(DatabaseConract.UsersTable.COLUMN_USER_NAME));
-                    String userID = mCursor.getString(mCursor.getColumnIndex(DatabaseConract.UsersTable.COLUMN_USER_ID));
+                    String userName = mCursor.getString(mCursor.getColumnIndex("username"));
+                    String userID = mCursor.getString(mCursor.getColumnIndex("userID"));
 
                     Toast.makeText(LogInActivity.this, "Success :) Welcome  " + userName, Toast.LENGTH_SHORT).show();
 

@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.SignupLogin.LogInActivity;
 import com.example.mmuazekici.imdb250.UsersFriends.FriendsActivity;
@@ -69,7 +68,7 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
             usernameTextField.setText("Welcome");
         }
 
-        Cursor mCursor = myDbHelper.query(DatabaseConract.MoviesTable.TABLE_NAME, null, null, null, DatabaseConract.MoviesTable.COLUMN_IMDB_SCORE+ " DESC");
+        Cursor mCursor = myDbHelper.query("Movies", null, null, null, "imdbScore DESC");
         mAdapter.swapCursor(mCursor);
 
 
@@ -139,7 +138,7 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
     public void onClick(Cursor c, int clickedItemIndex) {
         if(c.moveToPosition(clickedItemIndex)){
             Intent startChildActivityIntent = new Intent(MovieListActivity.this, MovieDetailsActivity.class);
-            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_MOVIE_ID)) + "");
+            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex("movieID")));
             startActivity(startChildActivityIntent);
         }
     }

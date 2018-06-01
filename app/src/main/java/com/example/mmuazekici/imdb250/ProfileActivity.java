@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.SignupLogin.LogInActivity;
 import com.example.mmuazekici.imdb250.SignupLogin.SignUpActivity;
@@ -89,9 +88,9 @@ public class ProfileActivity extends AppCompatActivity {
         if(isInputsValid()) {
 
             ContentValues userValues = new ContentValues();
-            userValues.put(DatabaseConract.UsersTable.COLUMN_PASSWORD, password);
+            userValues.put("password", password);
 
-            myDbHelper.update(userValues, DatabaseConract.UsersTable.TABLE_NAME,"userID=?", new String[]{userID});
+            myDbHelper.update(userValues, "Users","userID=?", new String[]{userID});
 
             Toast.makeText(ProfileActivity.this, "Password is changed! Log in again!", Toast.LENGTH_SHORT).show();
 
@@ -120,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
-                        myDbHelper.delete(DatabaseConract.UsersTable.TABLE_NAME, "userID=?", new String[]{userID});
+                        myDbHelper.delete("Users", "userID=?", new String[]{userID});
 
                         Toast.makeText(ProfileActivity.this, "Account is removed!", Toast.LENGTH_SHORT).show();
 

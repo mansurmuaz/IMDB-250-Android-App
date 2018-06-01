@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -111,9 +110,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
 
     public void getMovieTable(){
-        Cursor movieCursor = myDbHelper.query(DatabaseConract.MoviesTable.TABLE_NAME,
+        Cursor movieCursor = myDbHelper.query("Movies",
                 null,
-                DatabaseConract.MoviesTable.COLUMN_MOVIE_ID + "=?",
+                "movieID=?",
                 new String[]{movieID},
                 null);
 
@@ -121,11 +120,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             movieCursor.moveToFirst();
 
-            tv_Name.setText(movieCursor.getString(movieCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_MOVIE_NAME)));
-            tv_Year.setText(movieCursor.getString(movieCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_DATE)));
-            tv_Score.setText(movieCursor.getString(movieCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_IMDB_SCORE)));
-            tv_Duration.setText(movieCursor.getString(movieCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_DURATION)));
-            tv_Topic.setText(movieCursor.getString(movieCursor.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_TOPIC)));
+            tv_Name.setText(movieCursor.getString(movieCursor.getColumnIndex("movieName")));
+            tv_Year.setText(movieCursor.getString(movieCursor.getColumnIndex("date")));
+            tv_Score.setText(movieCursor.getString(movieCursor.getColumnIndex("imdbScore")));
+            tv_Duration.setText(movieCursor.getString(movieCursor.getColumnIndex("duration")));
+            tv_Topic.setText(movieCursor.getString(movieCursor.getColumnIndex("topic")));
 
         }
     }

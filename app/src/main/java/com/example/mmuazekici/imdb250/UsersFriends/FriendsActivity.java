@@ -14,15 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
-import com.example.mmuazekici.imdb250.FavoritesActivity;
-import com.example.mmuazekici.imdb250.MovieDetailsActivity;
 import com.example.mmuazekici.imdb250.MovieListActivity;
-import com.example.mmuazekici.imdb250.ProfileActivity;
 import com.example.mmuazekici.imdb250.R;
-import com.example.mmuazekici.imdb250.SearchActivity;
-import com.example.mmuazekici.imdb250.SignupLogin.LogInActivity;
 
 public class FriendsActivity extends AppCompatActivity implements UsersAdapter.ItemAdapterOnClickHandler{
 

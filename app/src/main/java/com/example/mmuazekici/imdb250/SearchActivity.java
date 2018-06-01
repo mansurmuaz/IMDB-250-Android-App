@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 
 public class SearchActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, MoviesAdapter.ItemAdapterOnClickHandler {
@@ -88,7 +87,7 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
     public void onClick(Cursor c, int clickedItemIndex) {
         if(c.moveToPosition(clickedItemIndex)){
             Intent startChildActivityIntent = new Intent(this, MovieDetailsActivity.class);
-            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_MOVIE_ID)) + "");
+            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex("movieID")));
             startActivity(startChildActivityIntent);
         }
     }

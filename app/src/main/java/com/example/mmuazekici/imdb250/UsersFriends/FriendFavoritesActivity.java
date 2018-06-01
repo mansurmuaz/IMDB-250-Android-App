@@ -10,7 +10,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.mmuazekici.imdb250.Database.DatabaseConract;
 import com.example.mmuazekici.imdb250.Database.DatabaseHelper;
 import com.example.mmuazekici.imdb250.FavoritesActivity;
 import com.example.mmuazekici.imdb250.MovieDetailsActivity;
@@ -76,7 +75,7 @@ public class FriendFavoritesActivity extends AppCompatActivity implements Movies
     public void onClick(Cursor c, int clickedItemIndex) {
         if(c.moveToPosition(clickedItemIndex)){
             Intent startChildActivityIntent = new Intent(FriendFavoritesActivity.this, MovieDetailsActivity.class);
-            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex(DatabaseConract.MoviesTable.COLUMN_MOVIE_ID)) + "");
+            startChildActivityIntent.putExtra(Intent.EXTRA_UID, c.getString(c.getColumnIndex("movieID")) + "");
             startActivity(startChildActivityIntent);
         }
     }
