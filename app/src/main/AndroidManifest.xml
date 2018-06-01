@@ -33,7 +33,7 @@
         <activity android:name=".UsersFriends.UsersActivity"
                   android:label="Users"/>
         <activity android:name=".UsersFriends.FriendsActivity"
-                  android:label="Your Friends"/>
+                  android:label="Your Followings"/>
         <activity android:name=".UsersFriends.FriendFavoritesActivity"></activity>
     </application>
 

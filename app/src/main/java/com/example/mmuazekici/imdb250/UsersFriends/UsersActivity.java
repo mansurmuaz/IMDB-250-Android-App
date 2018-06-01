@@ -29,8 +29,8 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.Ite
     UsersAdapter mAdapter;
     String userID;
 
-    String defaultMessage = "Do you want to send friendship request to ";
-    String rejectedMessage = "Your request has been rejected. Do you want to send friendship request again to ";
+    String defaultMessage = "Do you want to send following request to ";
+    String rejectedMessage = "Your request has been rejected. Do you want to send following request again to ";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,8 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.Ite
         mAdapter.swapCursor(mCursor);
     }
 
+
+
     @Override
     public void onClick(Cursor c, int clickedItemIndex) {
         if(c.moveToPosition(clickedItemIndex)){
@@ -68,10 +70,7 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.Ite
             String clickedUserID = c.getString(c.getColumnIndex("userID"));
             String clickedUsername = c.getString(c.getColumnIndex("username"));
 
-            //getFriendship data
             Cursor friendCursor = myDbHelper.query("User_Friends", null, "userID=? and friendID=?", new String[] {userID, clickedUserID}, null);
-
-            //if cursor is empty -->> Insert data to user_friends with state -1
 
             if (friendCursor.getCount()==0){
                 sendFriendshipRequestAlert(clickedUserID, clickedUsername, -1, defaultMessage);
@@ -122,7 +121,7 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.Ite
         } else {
             builder = new AlertDialog.Builder(this);
         }
-        builder.setTitle("Send Friendship Request")
+        builder.setTitle("Send Following Request")
                 .setMessage(message + username +"?")
                 .setPositiveButton("Send Request", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -153,7 +152,7 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.Ite
             builder = new AlertDialog.Builder(this);
         }
         builder.setTitle("Pending")
-                .setMessage("Your friendship request waiting for response by " + username +".")
+                .setMessage("Your following request waiting for response by " + username +".")
                 .setPositiveButton("Cancel Request", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -180,13 +179,13 @@ public class UsersActivity extends AppCompatActivity implements UsersAdapter.Ite
             builder = new AlertDialog.Builder(this);
         }
         builder.setTitle(username)
-                .setMessage("You are already friend by " + username +".")
-                .setPositiveButton("Remove Friend", new DialogInterface.OnClickListener() {
+                .setMessage("You have already been following to " + username +".")
+                .setPositiveButton("Unfollow", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         updateFriendshipDb(clickedUserID, 0);
 
-                        Toast.makeText(UsersActivity.this, "You are no longer friends with " + username + ".", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UsersActivity.this, "You are no longer following " + username + ".", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNeutralButton("Display Favorites", new DialogInterface.OnClickListener() {

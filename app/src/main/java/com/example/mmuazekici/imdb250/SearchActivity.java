@@ -225,6 +225,8 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
             mCursor = myDbHelper.rawQuery(sql, searchingArray);
         } else if (selectedSearchString.equals("Genre")){
 
+
+
             String sql = "SELECT * " +
                     "FROM Movie_Genres " +
                     "INNER JOIN Movies ON Movie_Genres.movieID = Movies.movieID " +
@@ -283,23 +285,4 @@ public class SearchActivity extends AppCompatActivity implements AdapterView.OnI
 
         mAdapter.swapCursor(mCursor);
     }
-
-
-//    public void showSearchByAlert(){
-//        new AlertDialog.Builder(this)
-//                .setTitle("Search Movies by:")
-//                .setSingleChoiceItems(searchByItems, 0, null)
-//                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int whichButton) {
-//                        dialog.dismiss();
-//                        selectedSearchItemPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
-//                    }
-//                })
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int whichButton) {
-//                        dialog.dismiss();
-//                    }
-//                })
-//                .show();
-//    }
 }

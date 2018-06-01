@@ -6,7 +6,7 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="users">Users</string>
-    <string name="friends">Friends</string>
+    <string name="friends">Followings</string>
 
 
     <string-array name="search_by">

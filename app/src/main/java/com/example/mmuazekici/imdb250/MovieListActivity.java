@@ -85,6 +85,7 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
     }
 
 
+
     public int checkRequests() {
 
         String sql = "SELECT Users.userID, Users.username " +
@@ -198,25 +199,6 @@ public class MovieListActivity extends AppCompatActivity implements MoviesAdapte
 
     @Override
     public void onBackPressed() {
-
-        Cursor xCursor = myDbHelper.query("User_Friends", null, null, null, null);
-        xCursor.moveToFirst();
-
-        Log.i("xxx", "-----------------------------------------------");
-        Log.i("xxx", "---------------User_Friends--------------------");
-        Log.i("xxx", "-----------------------------------------------");
-        Log.i("xxx", "-----userID-----friendID--------stateID--------");
-
-        for (int index = 0; index<xCursor.getCount(); index++){
-            String uID = xCursor.getString(xCursor.getColumnIndex("userID"));
-            String fID = xCursor.getString(xCursor.getColumnIndex("friendID"));
-            String sID = xCursor.getString(xCursor.getColumnIndex("stateID"));
-
-            Log.i("xxx", "--------  "+  uID  + "  -----  " + fID + "  -------  " + sID + "  -------");
-            xCursor.moveToNext();
-        }
-
-
     }
 
 
